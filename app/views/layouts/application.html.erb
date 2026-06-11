@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<%# lang dynamique selon la langue active (fr ou en) %>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <%# Titre : celui défini par la page (content_for) sinon le titre par défaut traduit %>
+    <title><%= content_for(:title) || t("meta.title") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Portfolio Marvin Cohen">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <%# Description pour le référencement (Google) et les partages, traduite %>
+    <meta name="description" content="<%= t("meta.description") %>">
+
+    <%# Auteur du site (signal léger pour les moteurs de recherche) %>
+    <meta name="author" content="Marvin Cohen">
+
+    <%# URL canonique : indique à Google l'adresse de référence de la page,
+        pour éviter le contenu dupliqué (ex : versions avec ou sans ?locale). %>
+    <link rel="canonical" href="<%= request.original_url.split('?').first %>">
+
+    <%# --- Open Graph (Facebook, LinkedIn, Slack...) ---
+        Contrôle l'aperçu quand le lien est partagé sur les réseaux sociaux.
+        On réutilise le titre et la description traduits de la page. %>
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Marvin Cohen">
+    <meta property="og:title" content="<%= content_for(:title) || t("meta.title") %>">
+    <meta property="og:description" content="<%= t("meta.description") %>">
+    <meta property="og:url" content="<%= request.original_url.split('?').first %>">
+    <meta property="og:locale" content="<%= I18n.locale == :fr ? 'fr_FR' : 'en_US' %>">
+    <%# Image de partage 1200x630 (générée dans public/og-image.png).
+        request.base_url donne l'URL absolue, requise par les réseaux sociaux. %>
+    <meta property="og:image" content="<%= request.base_url %>/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <%# --- Twitter Card --- aperçu enrichi (grande image) sur Twitter/X %>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= content_for(:title) || t("meta.title") %>">
+    <meta name="twitter:description" content="<%= t("meta.description") %>">
+    <meta name="twitter:image" content="<%= request.base_url %>/og-image.png">
+
+    <%# --- Données structurées schema.org (JSON-LD) ---
+        Décrit Marvin comme une "Person" pour Google : peut enrichir
+        l'affichage dans les résultats de recherche (knowledge panel). %>
+    <script type="application/ld+json">
+    <%= raw({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Marvin Cohen",
+      "jobTitle": I18n.locale == :fr ? "Développeur Ruby on Rails" : "Ruby on Rails Developer",
+      "url": request.base_url,
+      "email": "marvincohen95@gmail.com",
+      "sameAs": [
+        "https://github.com/MarvinCohen",
+        "https://www.linkedin.com/in/marvincohen95/"
+      ]
+    }.to_json) %>
+    </script>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# --- Polices Google Fonts ---
+        preconnect : ouvre la connexion aux serveurs de polices en avance (perf).
+        On charge 4 familles : Space Grotesk (titres), Inter (texte),
+        JetBrains Mono (labels/code), Zen Kaku Gothic New (japonais). %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Charge le CSS compilé par dartsass (app/assets/builds/application.css) %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <%# data-controller="cursor" : active le curseur custom sur toute la page %>
+  <body data-controller="cursor">
+    <%# Curseur custom : anneau qui suit la souris + point central %>
+    <div class="cursor-ring" data-cursor-target="ring"></div>
+    <div class="cursor-dot" data-cursor-target="dot"></div>
+
+    <%# Texture de bruit (grain) superposée sur tout l'écran %>
+    <div class="grain"></div>
+
+    <%# Ligne lumineuse qui balaie l'écran (effet écran tech) %>
+    <div class="scanline"></div>
+
+    <%# Lignes verticales décoratives de fond (style blueprint) %>
+    <div class="grid-lines">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <%# Kanji verticaux dans les marges (décoratif) :
+        gauche = "développeur web", droite = "Ruby on Rails" en katakana %>
+    <span class="side-kanji side-kanji--left" aria-hidden="true">ウェブ開発者</span>
+    <span class="side-kanji side-kanji--right" aria-hidden="true">ルビー・オン・レイルズ</span>
+
+    <%# --- Barre de navigation fixe (data-controller scrollspy) ---
+        Les liens pointent vers la home + ancre (ex: /#projets) pour
+        fonctionner aussi depuis les pages détail de projet. %>
+    <nav class="nav" data-controller="scrollspy">
+      <div class="container nav__inner">
+        <%# Logo : initiales + point vermillon, retour en haut de la home %>
+        <a href="<%= root_path %>#hero" class="nav__logo">MC<span>.</span></a>
+
+        <%# Liens d'ancre vers chaque section %>
+        <ul class="nav__links">
+          <li><a href="<%= root_path %>#projets"><%= t("nav.projects") %></a></li>
+          <li><a href="<%= root_path %>#competences"><%= t("nav.skills") %></a></li>
+          <li><a href="<%= root_path %>#about"><%= t("nav.about") %></a></li>
+          <li><a href="<%= root_path %>#contact"><%= t("nav.contact") %></a></li>
+        </ul>
+
+        <%# Sélecteur de langue : FR / EN.
+            On passe TOUJOURS la langue explicitement (?locale=fr ou ?locale=en),
+            même pour le français : sinon, sans paramètre, set_locale retombe sur
+            la langue mémorisée en session et on resterait bloqué dans la langue
+            précédente (impossible de rebasculer).
+            La langue active est mise en valeur (classe is-active). %>
+        <div class="nav__lang">
+          <a href="<%= url_for(locale: :fr) %>"
+             class="<%= "is-active" if I18n.locale == :fr %>">FR</a>
+          <span class="nav__lang-sep">/</span>
+          <a href="<%= url_for(locale: :en) %>"
+             class="<%= "is-active" if I18n.locale == :en %>">EN</a>
+        </div>
+      </div>
+    </nav>
+
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+// =============================================================
+// _tokens.scss — jetons de design (design tokens)
+// On déclare toutes les valeurs réutilisables comme variables CSS
+// dans :root. Avantage : accessibles partout via var(--nom),
+// modifiables à un seul endroit, pas de souci de portée Sass.
+// =============================================================
+
+:root {
+  // --- Couleurs de fond (palette "néo-Tokyo" très sombre) ---
+  --bg: #0a0a0b;          // Fond principal, presque noir
+  --bg-soft: #101015;     // Fond légèrement plus clair (sections alternées)
+  --surface: #141419;     // Fond des cartes
+  --surface-hi: #1b1b22;  // Carte au survol
+
+  // --- Bordures et lignes ---
+  --line: rgba(255, 255, 255, 0.08);   // Lignes fines de grille / séparateurs
+  --line-strong: rgba(255, 255, 255, 0.16);
+
+  // --- Texte ---
+  --text: #ededf2;        // Texte principal (blanc cassé)
+  --text-dim: #8b8b96;    // Texte secondaire (gris)
+  --text-faint: #55555f;  // Texte très discret (numéros, labels)
+
+  // --- Couleurs d'accent ---
+  --accent: #ff2d4f;      // Vermillon japonais (朱) — couleur signature
+  --accent-soft: rgba(255, 45, 79, 0.12); // Vermillon très transparent (fonds)
+  --cyan: #34e7e4;        // Cyan tech — accent secondaire
+  --cyan-soft: rgba(52, 231, 228, 0.12);
+
+  // --- Typographies ---
+  // Chargées via <link> Google Fonts dans le layout
+  --font-display: "Space Grotesk", system-ui, sans-serif; // Titres
+  --font-body: "Inter", system-ui, sans-serif;            // Texte courant
+  --font-mono: "JetBrains Mono", monospace;               // Labels, code, chiffres
+  --font-jp: "Zen Kaku Gothic New", sans-serif;           // Caractères japonais
+
+  // --- Mesures ---
+  --container: 1120px;    // Largeur max du contenu
+  --radius: 4px;          // Coins légèrement arrondis (style tech anguleux)
+}

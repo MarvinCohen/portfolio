@@ -1,0 +1,65 @@
+// =============================================================
+// _base.scss — reset léger + styles de base du document
+// =============================================================
+
+// Reset : la box-sizing border-box évite les surprises de largeur
+// (le padding ne s'ajoute pas à la largeur déclarée).
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// scroll-behavior: smooth → défilement doux quand on clique une ancre (#projets)
+html {
+  scroll-behavior: smooth;
+  // Décale l'ancre pour ne pas passer sous la barre de nav fixe
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  // antialiasing : rend le texte plus net sur les écrans Apple
+  -webkit-font-smoothing: antialiased;
+  // Évite un scroll horizontal accidentel à cause des éléments décoratifs
+  overflow-x: hidden;
+}
+
+// Titres : police display, lettres resserrées pour le côté "tech"
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+// Tous les liens héritent de la couleur du texte par défaut (on stylise au cas par cas)
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// Les images ne dépassent jamais leur conteneur
+img {
+  max-width: 100%;
+  display: block;
+}
+
+// Classe utilitaire : texte en caractères japonais
+.jp {
+  font-family: var(--font-jp);
+}
+
+// Classe utilitaire : petit label monospace en majuscules (style terminal)
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}

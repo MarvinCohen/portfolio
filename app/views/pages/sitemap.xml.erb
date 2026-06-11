@@ -1,0 +1,23 @@
+<%# =========================================================
+    Plan du site (sitemap) au format XML standard.
+    Liste les URL importantes pour aider Google a les indexer.
+    Variable : @projects (tous les projets, pour les pages detail).
+    ========================================================= %>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <%# Page d'accueil : priorite maximale (1.0), elle change regulierement %>
+  <url>
+    <loc><%= root_url %></loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <%# Une entree par page detail projet (etude de cas) %>
+  <% @projects.each do |project| %>
+    <url>
+      <loc><%= project_url(project.slug) %></loc>
+      <changefreq>yearly</changefreq>
+      <priority>0.8</priority>
+    </url>
+  <% end %>
+</urlset>

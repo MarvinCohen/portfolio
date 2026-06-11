@@ -1,0 +1,87 @@
+<%# =========================================================
+    Section CONTACT, liens directs + formulaire.
+    @contact est fourni par pages#home (objet vide) ou par
+    contacts#create (objet rempli avec ses erreurs si invalide).
+    ========================================================= %>
+<section id="contact" class="section section--soft">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="section-head__num">04</span>
+      <span class="section-head__jp">連絡</span>
+      <h2 class="section-head__title"><%= t("sections.contact") %></h2>
+    </div>
+
+    <div class="contact-grid">
+      <%# --- Colonne gauche : intro + liens directs --- %>
+      <div class="contact__intro" data-reveal>
+        <p><%= t("contact.intro") %></p>
+
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:marvincohen95@gmail.com">
+            <span><span class="contact-link__label"><%= t("contact.email_label") %></span> &nbsp; marvincohen95@gmail.com</span>
+            <span>→</span>
+          </a>
+          <a class="contact-link" href="https://github.com/MarvinCohen" target="_blank" rel="noopener">
+            <span><span class="contact-link__label"><%= t("contact.github_label") %></span> &nbsp; @MarvinCohen</span>
+            <span>→</span>
+          </a>
+          <a class="contact-link" href="https://www.linkedin.com/in/marvincohen95/" target="_blank" rel="noopener">
+            <span><span class="contact-link__label"><%= t("contact.linkedin_label") %></span> &nbsp; in/marvincohen95</span>
+            <span>→</span>
+          </a>
+        </div>
+
+        <%# Encart de disponibilité : point clignotant + texte (CDI / freelance).
+            Remplit l'espace sous les liens et rassure les visiteurs sur ma dispo. %>
+        <div class="contact-availability">
+          <span class="contact-availability__dot" aria-hidden="true"></span>
+          <div>
+            <span class="contact-availability__label"><%= t("contact.availability_label") %></span>
+            <p class="contact-availability__text"><%= t("contact.availability_value") %></p>
+          </div>
+        </div>
+      </div>
+
+      <%# --- Colonne droite : formulaire --- %>
+      <div data-reveal>
+        <%# Messages flash (succès après envoi, ou erreur) %>
+        <% if flash[:notice] %>
+          <div class="flash flash--notice"><%= flash[:notice] %></div>
+        <% end %>
+        <% if flash[:alert] %>
+          <div class="flash flash--alert"><%= flash[:alert] %></div>
+        <% end %>
+
+        <%= form_with model: @contact, url: contacts_path, class: "contact-form" do |f| %>
+          <%# Affiche la liste des erreurs de validation si le formulaire a échoué %>
+          <% if @contact.errors.any? %>
+            <div class="form-errors">
+              <ul>
+                <% @contact.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="form-group">
+            <%= f.label :name, t("contact.form.name") %>
+            <%= f.text_field :name, placeholder: t("contact.form.name_placeholder") %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :email, t("contact.form.email") %>
+            <%= f.email_field :email, placeholder: t("contact.form.email_placeholder") %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :message, t("contact.form.message") %>
+            <%= f.text_area :message, placeholder: t("contact.form.message_placeholder") %>
+          </div>
+
+          <%= f.submit t("contact.form.submit"), class: "btn btn--primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

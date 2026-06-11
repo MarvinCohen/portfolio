@@ -1,0 +1,57 @@
+<%# =========================================================
+    Section COMPÉTENCES, regroupées par catégorie.
+    Les noms de technos ne se traduisent pas, seuls les titres de
+    catégorie passent par i18n.
+    ========================================================= %>
+<section id="competences" class="section section--soft">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="section-head__num">02</span>
+      <span class="section-head__jp">技術</span>
+      <h2 class="section-head__title"><%= t("sections.skills") %></h2>
+    </div>
+
+    <div class="skills-grid">
+
+      <%# --- Backend --- %>
+      <div class="skill-group" data-reveal>
+        <h3 class="skill-group__title"><span class="jp">裏</span> <%= t("skills.backend") %></h3>
+        <ul class="skill-list">
+          <li>Ruby</li>
+          <li>Ruby on Rails 8</li>
+          <li>PostgreSQL</li>
+          <li>Active Record</li>
+          <li>Solid Queue</li>
+          <li>Action Cable</li>
+        </ul>
+      </div>
+
+      <%# --- Frontend --- %>
+      <div class="skill-group" data-reveal>
+        <h3 class="skill-group__title"><span class="jp">表</span> <%= t("skills.frontend") %></h3>
+        <ul class="skill-list">
+          <li>Hotwire (Turbo + Stimulus)</li>
+          <li>HTML / SCSS</li>
+          <li>JavaScript</li>
+          <li>Bootstrap 5</li>
+          <li>Responsive / Mobile-first</li>
+          <li>PWA</li>
+        </ul>
+      </div>
+
+      <%# --- Outils & déploiement --- %>
+      <div class="skill-group" data-reveal>
+        <h3 class="skill-group__title"><span class="jp">道具</span> <%= t("skills.tools") %></h3>
+        <ul class="skill-list">
+          <li>Git / GitHub</li>
+          <li>Devise</li>
+          <li>Active Storage / Cloudinary</li>
+          <li>Stripe</li>
+          <li>Railway</li>
+          <li>Minitest</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>

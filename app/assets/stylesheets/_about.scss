@@ -1,0 +1,52 @@
+// =============================================================
+// _about.scss — section à propos : texte + encart parcours
+// =============================================================
+
+// Disposition en deux colonnes : texte à gauche, faits à droite
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about__text p {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+}
+.about__text strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+// Encart latéral : liste de faits clés (parcours, objectif…)
+.about-facts {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+.about-fact {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.about-fact:last-child { border-bottom: none; }
+
+.about-fact__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 6px;
+}
+.about-fact__value {
+  font-size: 0.98rem;
+  color: var(--text);
+}
+.about-fact__value .accent { color: var(--accent); }
+
+@media (max-width: 820px) {
+  .about-grid { grid-template-columns: 1fr; gap: 32px; }
+}

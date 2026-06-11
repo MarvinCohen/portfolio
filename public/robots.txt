@@ -1,0 +1,11 @@
+# Fichier robots.txt : indique aux moteurs de recherche ce qu'ils peuvent explorer.
+# Voir https://www.robotstxt.org/robotstxt.html pour la documentation.
+
+# On autorise tous les robots à explorer l'intégralité du site.
+User-agent: *
+Allow: /
+
+# Adresse du plan du site (sitemap).
+# À COMPLÉTER après le déploiement : remplace TON-DOMAINE par l'adresse réelle
+# (ex : https://portfolio-marvin.up.railway.app/sitemap.xml).
+Sitemap: https://TON-DOMAINE/sitemap.xml

@@ -1,0 +1,9 @@
+<%# Version HTML de l'email reçu quand quelqu'un remplit le formulaire de contact %>
+<h2>Nouveau message depuis le portfolio</h2>
+
+<p><strong>Nom :</strong> <%= @contact.name %></p>
+<p><strong>Email :</strong> <%= @contact.email %></p>
+
+<p><strong>Message :</strong></p>
+<%# simple_format transforme les sauts de ligne du message en paragraphes HTML %>
+<%= simple_format(@contact.message) %>

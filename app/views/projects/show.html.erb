@@ -1,0 +1,79 @@
+<%# =========================================================
+    Page détail d'un projet (étude de cas).
+    Variable : @project (objet Project).
+    Tous les textes proviennent des fichiers de langue (bilingue).
+    ========================================================= %>
+
+<%# Titre de l'onglet du navigateur et balise <title> (lu par le layout).
+    On le définit ici car content_for est un helper de vue. %>
+<% content_for(:title, "#{@project.name} · Marvin Cohen") %>
+
+<main class="project-detail" data-controller="reveal">
+  <div class="container">
+
+    <%# Lien de retour vers la section projets de la home %>
+    <a href="<%= root_path %>#projets" class="project-detail__back" data-reveal>
+      ← <%= t("projects.back") %>
+    </a>
+
+    <%# En-tête : badge + nom + accroche %>
+    <header class="project-detail__head" data-reveal>
+      <span class="project-card__badge"><%= @project.badge %></span>
+      <h1 class="project-detail__title">
+        <%= @project.name %><span class="accent">.</span>
+      </h1>
+      <p class="project-detail__tagline"><%= @project.tagline %></p>
+    </header>
+
+    <div class="project-detail__grid">
+      <%# Colonne principale : contexte, rôle, fonctionnalités %>
+      <div class="project-detail__main">
+        <div class="project-detail__block" data-reveal>
+          <h2 class="project-detail__label"><%= t("projects.context_label") %></h2>
+          <p><%= @project.context %></p>
+        </div>
+
+        <div class="project-detail__block" data-reveal>
+          <h2 class="project-detail__label"><%= t("projects.role_label") %></h2>
+          <p><%= @project.role %></p>
+        </div>
+
+        <div class="project-detail__block" data-reveal>
+          <h2 class="project-detail__label"><%= t("projects.features_label") %></h2>
+          <ul class="skill-list">
+            <% @project.features.each do |feature| %>
+              <li><%= feature %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <%# Colonne latérale : stack technique + liens %>
+      <aside class="project-detail__side" data-reveal>
+        <h2 class="project-detail__label"><%= t("projects.stack_label") %></h2>
+        <div class="project-card__stack">
+          <% @project.stack.each do |tech| %>
+            <span class="tech-chip"><%= tech %></span>
+          <% end %>
+        </div>
+
+        <div class="project-detail__links">
+          <% if @project.private_project %>
+            <a href="<%= root_path %>#contact" class="btn btn--ghost" data-controller="magnetic">
+              <%= t("projects.private_link") %>
+            </a>
+          <% else %>
+            <% if @project.site_url %>
+              <a href="<%= @project.site_url %>" target="_blank" rel="noopener" class="btn btn--primary" data-controller="magnetic">
+                ↗ <%= t("projects.site_link") %>
+              </a>
+            <% end %>
+            <a href="<%= @project.code_url %>" target="_blank" rel="noopener" class="btn btn--ghost" data-controller="magnetic">
+              ⌥ <%= t("projects.code_link") %>
+            </a>
+          <% end %>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>

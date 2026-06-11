@@ -1,0 +1,67 @@
+// =============================================================
+// _animations.scss — keyframes, apparition au scroll, scanline.
+// Les animations restent sobres pour un rendu pro.
+// =============================================================
+
+// --- Apparition au scroll ---
+// Les éléments marqués data-reveal commencent invisibles et décalés vers le bas.
+// Le contrôleur Stimulus scroll_reveal leur ajoute la classe .is-visible
+// quand ils entrent dans l'écran → ils remontent et apparaissent en fondu.
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// --- Curseur clignotant (effet terminal) pour le texte machine à écrire ---
+.cursor {
+  display: inline-block;
+  width: 0.6ch;
+  background: var(--accent);
+  // Animation de clignotement infinie
+  animation: blink 1s step-end infinite;
+  // Aligné sur la hauteur du texte
+  margin-left: 2px;
+}
+@keyframes blink {
+  50% { opacity: 0; } // Disparaît à mi-parcours → effet clignotant
+}
+
+// --- Effet scanline : fine ligne lumineuse qui balaie l'écran ---
+// Évoque un vieil écran cathodique / interface tech japonaise.
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  // Dégradé horizontal cyan → transparent
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.25;
+  z-index: 50;
+  pointer-events: none;
+  // Descend lentement de haut en bas, en boucle
+  animation: scan 6s linear infinite;
+}
+@keyframes scan {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+// Respect de l'accessibilité : si l'utilisateur réduit les animations
+// (préférence système), on désactive tout mouvement.
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .scanline,
+  .cursor {
+    animation: none;
+  }
+}

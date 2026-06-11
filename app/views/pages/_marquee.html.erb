@@ -1,0 +1,23 @@
+<%# =========================================================
+    Bandeau MARQUEE — mots-clés techno qui défilent en boucle.
+    Le contenu est DUPLIQUÉ deux fois : l'animation translate de -50%
+    fait défiler la première moitié, et la seconde prend le relais
+    sans saut visible (boucle parfaite).
+    aria-hidden : purement décoratif, ignoré par les lecteurs d'écran.
+    ========================================================= %>
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <% 2.times do %>
+      <span>RUBY</span><span class="sep">・</span>
+      <span>RAILS</span><span class="sep">・</span>
+      <span>HOTWIRE</span><span class="sep">・</span>
+      <span>POSTGRESQL</span><span class="sep">・</span>
+      <span>STIMULUS</span><span class="sep">・</span>
+      <span>TURBO</span><span class="sep">・</span>
+      <span>SCSS</span><span class="sep">・</span>
+      <span>ACTIVE&nbsp;RECORD</span><span class="sep">・</span>
+      <span>DEVISE</span><span class="sep">・</span>
+      <span>RAILWAY</span><span class="sep">・</span>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<%# =========================================================
+    Section HERO, accueil plein écran.
+    data-controller="typewriter" anime le sous-titre :
+    il écrit puis efface les phrases traduites (t("hero.phrases")).
+    Tous les textes proviennent des fichiers de langue (config/locales).
+    ========================================================= %>
+<section id="hero" class="hero">
+  <%# Caractère japonais géant en filigrane (開発 = "développement") %>
+  <span class="hero__kanji" aria-hidden="true">開発</span>
+
+  <div class="container hero__inner">
+    <%# Badge de disponibilité %>
+    <span class="hero__status" data-reveal>
+      <span class="hero__dot"></span>
+      <%= t("hero.status") %>
+    </span>
+
+    <%# Titre principal : nom + métier %>
+    <h1 class="hero__title" data-reveal>
+      Marvin Cohen<span class="accent">.</span><br>
+      <span class="accent"><%= t("hero.title_role_accent") %></span> <%= t("hero.title_role") %>
+    </h1>
+
+    <%# Sous-titre animé en machine à écrire.
+        Les phrases traduites sont passées en JSON au contrôleur Stimulus. %>
+    <p class="hero__subtitle"
+       data-reveal
+       data-controller="typewriter"
+       data-typewriter-phrases-value='<%= t("hero.phrases").to_json %>'>
+      <span data-typewriter-target="output"></span><span class="cursor">&nbsp;</span>
+    </p>
+
+    <%# Boutons d'appel à l'action (data-controller magnetic = effet aimant) %>
+    <div class="hero__cta" data-reveal>
+      <a href="#projets" class="btn btn--primary" data-controller="magnetic"><%= t("hero.cta_projects") %></a>
+      <a href="#contact" class="btn btn--ghost" data-controller="magnetic"><%= t("hero.cta_contact") %></a>
+    </div>
+  </div>
+
+  <%# Indicateur "défiler" en bas %>
+  <span class="hero__scroll"><%= t("hero.scroll") %></span>
+</section>

@@ -1,0 +1,23 @@
+<%# =========================================================
+    home.html.erb — page d'accueil unique (one-page).
+    data-controller="reveal" : active l'apparition au scroll
+    sur tous les éléments [data-reveal] contenus dans <main>.
+    Chaque section est un partial pour garder ce fichier lisible.
+    ========================================================= %>
+<main data-controller="reveal">
+  <%= render "pages/hero" %>
+  <%= render "pages/projects" %>
+  <%= render "pages/marquee" %>
+  <%= render "pages/skills" %>
+  <%= render "pages/about" %>
+  <%= render "pages/contact" %>
+
+  <%# --- Pied de page --- %>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__text">
+        <%= t("footer_html", year: Date.current.year) %>
+      </p>
+    </div>
+  </footer>
+</main>

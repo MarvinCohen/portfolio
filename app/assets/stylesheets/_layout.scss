@@ -1,0 +1,164 @@
+// =============================================================
+// _layout.scss — structure : conteneur, nav, grille décorative,
+// en-têtes de section numérotés (01 / 作品), pied de page.
+// =============================================================
+
+// Conteneur central : limite la largeur et centre le contenu
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+// --- Barre de navigation fixe en haut ---
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  // Fond semi-transparent + flou : on voit le contenu défiler derrière
+  background: rgba(10, 10, 11, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+// Logo : initiales en monospace + point vermillon (rappel du "." de Biche.)
+.nav__logo {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+}
+.nav__logo span {
+  color: var(--accent); // Le point coloré
+}
+
+// Liens de navigation (cachés sur mobile, voir media query plus bas)
+.nav__links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.nav__links a {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  transition: color 0.2s ease;
+  position: relative;
+}
+.nav__links a:hover {
+  color: var(--text);
+}
+
+// Sélecteur de langue FR / EN
+.nav__lang {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.nav__lang a {
+  color: var(--text-faint);
+  transition: color 0.2s ease;
+}
+.nav__lang a:hover { color: var(--text); }
+// Langue active mise en avant en vermillon
+.nav__lang a.is-active { color: var(--accent); }
+.nav__lang-sep { color: var(--line-strong); }
+
+// --- Sections : espacement vertical généreux ---
+.section {
+  padding: 120px 0;
+  position: relative;
+}
+// Une section sur deux a un fond légèrement différent (rythme visuel)
+.section--soft {
+  background: var(--bg-soft);
+}
+
+// --- En-tête de section : numéro + kanji + titre ---
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 56px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+}
+// Numéro de section (01, 02...) en vermillon
+.section-head__num {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+// Caractères japonais discrets à côté du titre
+.section-head__jp {
+  font-family: var(--font-jp);
+  color: var(--text-faint);
+  font-size: 1.1rem;
+}
+.section-head__title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin-left: auto; // Pousse le titre à droite pour un look asymétrique
+}
+
+// --- Lignes de grille verticales décoratives (style blueprint tech) ---
+// Fines lignes verticales fixées en fond, purement esthétiques.
+.grid-lines {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none; // Ne bloque jamais les clics
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+.grid-lines span {
+  width: 1px;
+  height: 100%;
+  background: var(--line);
+  opacity: 0.5;
+}
+
+// Le contenu doit passer AU-DESSUS des lignes de grille (z-index)
+.nav,
+main {
+  position: relative;
+  z-index: 1;
+}
+
+// --- Pied de page ---
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 40px 0;
+  text-align: center;
+}
+.footer__text {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+// --- Responsive : on cache les liens de nav et la grille sur petit écran ---
+@media (max-width: 720px) {
+  .nav__links { display: none; }
+  .grid-lines { display: none; }
+  .section { padding: 80px 0; }
+  .section-head {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .section-head__title { margin-left: 0; width: 100%; }
+}

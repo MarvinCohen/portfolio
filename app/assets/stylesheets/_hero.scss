@@ -1,0 +1,139 @@
+// =============================================================
+// _hero.scss — section d'accueil plein écran
+// =============================================================
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  // Léger halo vermillon en haut à gauche (effet d'ambiance)
+  background:
+    radial-gradient(600px 400px at 15% 20%, var(--accent-soft), transparent 70%),
+    radial-gradient(500px 400px at 85% 80%, var(--cyan-soft), transparent 70%);
+}
+
+// Caractères japonais géants en filigrane sur le côté (décoratif)
+.hero__kanji {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-jp);
+  font-size: clamp(6rem, 22vw, 18rem);
+  // Écriture verticale (typique du japonais)
+  writing-mode: vertical-rl;
+  color: var(--text);
+  opacity: 0.03; // Quasi invisible : sert juste de texture
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.hero__inner {
+  max-width: 760px;
+}
+
+// Petit label au-dessus du titre : statut "disponible"
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+// Petit point cyan qui "pulse" pour signaler la disponibilité
+.hero__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 0 var(--cyan);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(52, 231, 228, 0.5); }
+  100% { box-shadow: 0 0 0 10px rgba(52, 231, 228, 0); }
+}
+
+.hero__title {
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  margin-bottom: 20px;
+}
+// Le nom de métier en vermillon
+.hero__title .accent {
+  color: var(--accent);
+}
+
+// Sous-titre / accroche
+.hero__subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--text-dim);
+  max-width: 560px;
+  margin-bottom: 40px;
+  // Hauteur de ligne minimale pour ne pas sauter pendant l'effet machine à écrire
+  min-height: 1.6em;
+}
+
+// Groupe de boutons d'appel à l'action
+.hero__cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+// --- Boutons réutilisables ---
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 14px 26px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+// Bouton plein vermillon
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+}
+.btn--primary:hover {
+  // S'assombrit légèrement + léger soulèvement
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+// Bouton contour (secondaire)
+.btn--ghost {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+.btn--ghost:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+// Indicateur de défilement en bas du hero
+.hero__scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  letter-spacing: 0.2em;
+  // Petite animation de rebond vertical
+  animation: bob 2s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(6px); }
+}

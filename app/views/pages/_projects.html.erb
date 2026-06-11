@@ -1,0 +1,20 @@
+<%# =========================================================
+    Section PROJETS, grille de cartes.
+    On boucle sur Project.all et on délègue l'affichage de chaque
+    carte au partial _project_card (DRY : un seul gabarit de carte).
+    ========================================================= %>
+<section id="projets" class="section">
+  <div class="container">
+    <%# En-tête de section : numéro + kanji + titre %>
+    <div class="section-head" data-reveal>
+      <span class="section-head__num">01</span>
+      <span class="section-head__jp">作品</span>
+      <h2 class="section-head__title"><%= t("sections.projects") %></h2>
+    </div>
+
+    <div class="projects-grid">
+      <%# Pour chaque projet, on rend une carte (collection rendering Rails) %>
+      <%= render partial: "pages/project_card", collection: @projects, as: :project %>
+    </div>
+  </div>
+</section>

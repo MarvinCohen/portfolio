@@ -1,0 +1,44 @@
+<%# =========================================================
+    Section À PROPOS, texte de présentation + faits clés.
+    Les textes (avec balises <strong>) viennent des clés *_html
+    des fichiers de langue : Rails les marque automatiquement comme
+    HTML sûr quand la clé se termine par _html.
+    ========================================================= %>
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <span class="section-head__num">03</span>
+      <span class="section-head__jp">私について</span>
+      <h2 class="section-head__title"><%= t("sections.about") %></h2>
+    </div>
+
+    <div class="about-grid">
+      <%# Colonne de gauche : texte de présentation %>
+      <div class="about__text" data-reveal>
+        <p><%= t("about.p1_html") %></p>
+        <p><%= t("about.p2_html") %></p>
+        <p><%= t("about.p3_html") %></p>
+      </div>
+
+      <%# Colonne de droite : encart de faits clés %>
+      <aside class="about-facts" data-reveal>
+        <div class="about-fact">
+          <div class="about-fact__label"><%= t("about.facts.specialty_label") %></div>
+          <div class="about-fact__value"><%= t("about.facts.specialty_value_html") %></div>
+        </div>
+        <div class="about-fact">
+          <div class="about-fact__label"><%= t("about.facts.training_label") %></div>
+          <div class="about-fact__value"><%= t("about.facts.training_value") %></div>
+        </div>
+        <div class="about-fact">
+          <div class="about-fact__label"><%= t("about.facts.search_label") %></div>
+          <div class="about-fact__value"><%= t("about.facts.search_value_html") %></div>
+        </div>
+        <div class="about-fact">
+          <div class="about-fact__label"><%= t("about.facts.location_label") %></div>
+          <div class="about-fact__value"><%= t("about.facts.location_value") %></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

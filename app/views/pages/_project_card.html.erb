@@ -1,0 +1,39 @@
+<%# =========================================================
+    Carte projet (partial réutilisé par la section projets).
+    Variable locale : project (un objet Project).
+    Le titre et la carte mènent à la page détail du projet.
+    ========================================================= %>
+<article class="project-card" data-reveal>
+  <div class="project-card__head">
+    <%# Le nom mène à la page détail (étude de cas) %>
+    <h3 class="project-card__name">
+      <%= link_to project_path(project.slug) do %>
+        <%= project.name %><span class="accent">.</span>
+      <% end %>
+    </h3>
+    <span class="project-card__badge"><%= project.badge %></span>
+  </div>
+
+  <p class="project-card__tagline"><%= project.tagline %></p>
+  <p class="project-card__desc"><%= project.desc %></p>
+
+  <%# Liste des technologies %>
+  <div class="project-card__stack">
+    <% project.stack.each do |tech| %>
+      <span class="tech-chip"><%= tech %></span>
+    <% end %>
+  </div>
+
+  <%# Liens : page détail + (site / code) ou "sur demande" si projet privé %>
+  <div class="project-card__links">
+    <%= link_to "→ #{t('projects.detail_link')}", project_path(project.slug) %>
+    <% if project.private_project %>
+      <a href="#contact"><%= t("projects.private_link") %></a>
+    <% else %>
+      <% if project.site_url %>
+        <a href="<%= project.site_url %>" target="_blank" rel="noopener">↗ <%= t("projects.site_link") %></a>
+      <% end %>
+      <a href="<%= project.code_url %>" target="_blank" rel="noopener">⌥ <%= t("projects.code_link") %></a>
+    <% end %>
+  </div>
+</article>

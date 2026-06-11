@@ -1,0 +1,18 @@
+// =============================================================
+// application.scss — point d'entrée unique compilé par dartsass-rails
+// dartsass compile ce fichier vers app/assets/builds/application.css
+// Chaque @use importe un partial (_nom.scss) du même dossier.
+// On découpe par responsabilité pour garder le code lisible.
+// =============================================================
+
+@use "tokens";      // Variables de design (couleurs, typo) en custom properties CSS
+@use "base";        // Reset + styles de base (body, titres, liens)
+@use "layout";      // Conteneur, navigation, grille décorative, en-têtes de section
+@use "animations";  // Keyframes + classes d'apparition au scroll + scanline
+@use "hero";        // Section d'accueil (hero)
+@use "projects";    // Section projets (cards)
+@use "skills";      // Section compétences techniques
+@use "about";       // Section à propos
+@use "contact";        // Section contact + formulaire
+@use "project_detail"; // Page détail d'un projet (étude de cas)
+@use "fx";             // Effets : grain, curseur custom, marquee, kanji marges, glitch, scroll-spy

@@ -1,0 +1,128 @@
+// =============================================================
+// _projects.scss — section projets : grille de cartes
+// =============================================================
+
+// Grille responsive : 2 colonnes sur desktop, 1 sur mobile
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+// --- Carte projet ---
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+  // Carte en colonne flex + hauteur pleine : combinée à margin-top:auto sur
+  // les liens, cela aligne les liens en bas de chaque carte, même si une
+  // carte a moins de contenu (ex: moins de technologies) que sa voisine.
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.project-card:hover {
+  background: var(--surface-hi);
+  border-color: var(--line-strong);
+  transform: translateY(-4px);
+}
+// Fin trait vermillon en haut de la carte, révélé au survol
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  transform: scaleX(0);          // Caché par défaut (largeur 0)
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.project-card:hover::before {
+  transform: scaleX(1);          // Se déploie de gauche à droite au survol
+}
+
+// En-tête de carte : nom + badge type de projet
+.project-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.project-card__name {
+  font-size: 1.4rem;
+}
+.project-card__name .accent { color: var(--accent); }
+
+// Badge "Solo" / "Équipe" / "Client"
+.project-card__badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--text-dim);
+}
+
+// Sous-titre (rôle / une ligne d'accroche)
+.project-card__tagline {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--cyan);
+  margin-bottom: 16px;
+}
+
+.project-card__desc {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+// Liste des technologies (petits chips)
+.project-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.tech-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--text-dim);
+}
+
+// Liens de la carte (site / code)
+.project-card__links {
+  display: flex;
+  gap: 20px;
+  // Pousse le bloc de liens tout en bas de la carte (espace flexible au-dessus)
+  margin-top: auto;
+}
+.project-card__links a {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+.project-card__links a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card { padding: 24px; }
+}

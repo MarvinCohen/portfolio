@@ -1,0 +1,188 @@
+// =============================================================
+// _contact.scss — section contact : formulaire + liens directs
+// =============================================================
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  // stretch : les deux colonnes prennent la même hauteur (celle de la plus
+  // grande), pour pouvoir aligner l'encart de gauche et le formulaire en bas.
+  align-items: stretch;
+}
+
+// Colonne de gauche en flex vertical pleine hauteur : permet de pousser
+// l'encart de disponibilité tout en bas (voir margin-top: auto plus bas).
+.contact__intro {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.contact__intro p {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  margin-bottom: 32px;
+}
+
+// Liens directs (email, GitHub, LinkedIn) sous forme de liste
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  // Écart minimum garanti avant l'encart de disponibilité (qui, lui, est
+  // poussé en bas par margin-top: auto). Évite que l'encart colle aux liens.
+  margin-bottom: 28px;
+}
+.contact-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  transition: padding 0.2s ease, color 0.2s ease;
+}
+.contact-link:last-child { border-bottom: 1px solid var(--line); }
+.contact-link:hover {
+  color: var(--accent);
+  padding-left: 8px; // Léger décalage au survol (effet interactif)
+}
+.contact-link__label {
+  color: var(--text-faint);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+// Encart de disponibilité sous les liens (CDI / freelance)
+.contact-availability {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  // auto : absorbe l'espace libre pour pousser l'encart tout en bas de la
+  // colonne, afin de l'aligner avec le bas du formulaire de droite.
+  margin-top: auto;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+// Point cyan clignotant, réutilise l'animation "pulse" du hero
+.contact-availability__dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 0 var(--cyan);
+  animation: pulse 2s infinite;
+}
+.contact-availability__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.contact-availability__text {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin: 6px 0 0;
+}
+
+// --- Formulaire ---
+.contact-form {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 32px;
+  // Flex vertical pleine hauteur : la carte du formulaire s'étire pour avoir
+  // la même hauteur que la colonne de gauche, et son bas s'aligne avec l'encart.
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.form-group {
+  margin-bottom: 20px;
+}
+// Le groupe contenant la zone de message s'étire pour occuper l'espace libre,
+// ce qui agrandit le champ et garde le bouton "Envoyer" collé en bas.
+.form-group:has(textarea) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+// Champs de saisie : fond sombre, bordure qui s'allume au focus
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent); // Bordure vermillon au focus
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+  // Remplit la hauteur disponible quand le groupe message s'étire (voir plus haut)
+  flex: 1;
+}
+
+// Bandeau de confirmation après envoi (flash)
+.flash {
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border: 1px solid;
+}
+.flash--notice {
+  background: var(--cyan-soft);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.flash--alert {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+// Liste d'erreurs de validation du formulaire
+.form-errors {
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+.form-errors ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 820px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+}
