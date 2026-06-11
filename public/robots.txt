@@ -6,6 +6,4 @@ User-agent: *
 Allow: /
 
 # Adresse du plan du site (sitemap).
-# À COMPLÉTER après le déploiement : remplace TON-DOMAINE par l'adresse réelle
-# (ex : https://portfolio-marvin.up.railway.app/sitemap.xml).
-Sitemap: https://TON-DOMAINE/sitemap.xml
+Sitemap: https://web-production-a4d2f.up.railway.app/sitemap.xml
