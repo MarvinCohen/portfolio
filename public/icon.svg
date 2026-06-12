@@ -1,3 +1,11 @@
-<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="256" cy="256" r="256" fill="red"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Marvin Cohen">
+  <!-- Fond sombre arrondi, repris du fond du site (--bg) -->
+  <rect width="512" height="512" rx="112" fill="#0a0a0b"/>
+  <!-- Monogramme MC clair (--text), façon logo de la nav -->
+  <text x="248" y="256" text-anchor="middle" dominant-baseline="central"
+        font-family="'Space Grotesk','Helvetica Neue',Arial,sans-serif"
+        font-size="236" font-weight="700" letter-spacing="-8"
+        fill="#ededf2">MC</text>
+  <!-- Point vermillon (--accent) : la signature « MC. » du portfolio -->
+  <circle cx="426" cy="352" r="30" fill="#ff2d4f"/>
 </svg>
