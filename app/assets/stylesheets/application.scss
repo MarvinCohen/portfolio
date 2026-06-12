@@ -15,4 +15,5 @@
 @use "about";       // Section à propos
 @use "contact";        // Section contact + formulaire
 @use "project_detail"; // Page détail d'un projet (étude de cas)
+@use "cv";             // Bouton CV + panneau CV qui "pop" (overlay style terminal)
 @use "fx";             // Effets : grain, curseur custom, marquee, kanji marges, glitch, scroll-spy

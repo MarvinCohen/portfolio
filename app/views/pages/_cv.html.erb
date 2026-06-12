@@ -1,0 +1,178 @@
+<%# =========================================================
+    Panneau CV qui "pop" en overlay plein écran, façon fenêtre
+    terminal, dans le style néo-Tokyo du portfolio.
+    Masqué par défaut ; ouvert/fermé par le contrôleur Stimulus
+    "cv" (le bouton déclencheur est dans la nav du layout).
+    Contenu bilingue via les clés cv.* des locales.
+    ========================================================= %>
+<div class="cv-modal" data-cv-target="panel" aria-hidden="true">
+  <%# Voile sombre flouté en arrière-plan : un clic dessus ferme le panneau %>
+  <div class="cv-modal__backdrop" data-action="click->cv#close"></div>
+
+  <%# Fenêtre du CV (rôle dialog pour l'accessibilité) %>
+  <div class="cv-window" role="dialog" aria-modal="true" aria-label="<%= t('cv.name') %> CV">
+    <%# Barre de titre facon terminal : pastilles colorées + label mono + bouton fermer %>
+    <div class="cv-window__bar">
+      <span class="cv-window__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="cv-window__label"><%= t("cv.window_label") %></span>
+      <%# Bouton télécharger : ouvre la boîte d'impression du navigateur.
+          La feuille @media print ne laisse apparaître que le CV (thème clair),
+          l'utilisateur choisit « Enregistrer au format PDF ». %>
+      <button class="cv-window__pdf" type="button"
+              data-action="cv#print" aria-label="<%= t('cv.download') %>">
+        ⤓ <%= t("cv.download") %>
+      </button>
+      <button class="cv-window__close" type="button"
+              data-action="cv#close" aria-label="<%= t('cv.close') %>">✕</button>
+    </div>
+
+    <%# Corps défilant du CV %>
+    <div class="cv-window__body">
+      <%# --- En-tête : nom, rôle, localisation + liens (sans téléphone) --- %>
+      <header class="cv-head">
+        <div>
+          <h2 class="cv-head__name"><%= t("cv.name") %></h2>
+          <p class="cv-head__role"><%= t("cv.role") %></p>
+          <p class="cv-head__loc"><%= t("cv.location") %></p>
+        </div>
+        <%# Liens de contact directs (mono, alignés à droite sur desktop) %>
+        <ul class="cv-head__links">
+          <li>
+            <span class="cv-kbd"><%= t("cv.email_label") %></span>
+            <a href="mailto:marvincohen95@gmail.com">marvincohen95@gmail.com</a>
+          </li>
+          <%# Téléphone : visible UNIQUEMENT à l'impression (classe cv-print-only),
+              masqué à l'écran. Il n'apparaît donc que dans le PDF téléchargé. %>
+          <li class="cv-print-only">
+            <span class="cv-kbd"><%= t("cv.phone_label") %></span>
+            <a href="tel:+33619032536">+33 6 19 03 25 36</a>
+          </li>
+          <li>
+            <span class="cv-kbd"><%= t("cv.github_label") %></span>
+            <a href="https://github.com/MarvinCohen" target="_blank" rel="noopener">@MarvinCohen</a>
+          </li>
+          <li>
+            <span class="cv-kbd"><%= t("cv.linkedin_label") %></span>
+            <a href="https://www.linkedin.com/in/marvincohen95/" target="_blank" rel="noopener">in/marvincohen95</a>
+          </li>
+        </ul>
+      </header>
+
+      <%# --- Profil --- %>
+      <section class="cv-section">
+        <h3 class="cv-section__title"><%= t("cv.profile_title") %></h3>
+        <p class="cv-profile"><%= t("cv.profile_text") %></p>
+      </section>
+
+      <%# --- Grille deux colonnes : gauche (parcours), droite (formation/compétences) --- %>
+      <div class="cv-grid">
+        <div class="cv-col">
+          <%# Expérience professionnelle : on boucle sur le tableau traduit cv.experience %>
+          <section class="cv-section">
+            <h3 class="cv-section__title"><%= t("cv.experience_title") %></h3>
+            <% t("cv.experience").each do |exp| %>
+              <article class="cv-item">
+                <div class="cv-item__head">
+                  <span class="cv-item__role"><%= exp[:role] %></span>
+                  <span class="cv-item__period"><%= exp[:period] %></span>
+                </div>
+                <% if exp[:place].present? %>
+                  <p class="cv-item__place"><%= exp[:place] %></p>
+                <% end %>
+                <% if exp[:desc].present? %>
+                  <p class="cv-item__desc"><%= exp[:desc] %></p>
+                <% end %>
+              </article>
+            <% end %>
+          </section>
+
+          <%# Formation & certifications %>
+          <section class="cv-section">
+            <h3 class="cv-section__title"><%= t("cv.education_title") %></h3>
+            <% t("cv.education").each do |edu| %>
+              <article class="cv-item">
+                <div class="cv-item__head">
+                  <span class="cv-item__role"><%= edu[:title] %></span>
+                  <% if edu[:period].present? %>
+                    <span class="cv-item__period"><%= edu[:period] %></span>
+                  <% end %>
+                </div>
+                <% if edu[:place].present? %>
+                  <p class="cv-item__place"><%= edu[:place] %></p>
+                <% end %>
+                <% if edu[:desc].present? %>
+                  <p class="cv-item__desc"><%= edu[:desc] %></p>
+                <% end %>
+              </article>
+            <% end %>
+          </section>
+        </div>
+
+        <div class="cv-col">
+          <%# Projets : même structure, données dans cv.projects %>
+          <section class="cv-section">
+            <h3 class="cv-section__title"><%= t("cv.projects_title") %></h3>
+            <% t("cv.projects").each do |proj| %>
+              <article class="cv-item">
+                <div class="cv-item__head">
+                  <span class="cv-item__role"><%= proj[:name] %></span>
+                  <span class="cv-item__period"><%= proj[:period] %></span>
+                </div>
+                <p class="cv-item__desc"><%= proj[:desc] %></p>
+              </article>
+            <% end %>
+          </section>
+
+          <%# Compétences : groupes de "chips". Les noms de technos ne se
+              traduisent pas, donc on les écrit en dur ; seuls les titres
+              de groupes viennent des locales (cv.skills_groups.*). %>
+          <section class="cv-section">
+            <h3 class="cv-section__title"><%= t("cv.skills_title") %></h3>
+
+            <div class="cv-skillgroup">
+              <span class="cv-skillgroup__label"><%= t("cv.skills_groups.backend") %></span>
+              <ul class="cv-chips">
+                <% ["Ruby on Rails", "SQL", "PostgreSQL", "API REST"].each do |s| %>
+                  <li class="cv-chip"><%= s %></li>
+                <% end %>
+              </ul>
+            </div>
+
+            <div class="cv-skillgroup">
+              <span class="cv-skillgroup__label"><%= t("cv.skills_groups.frontend") %></span>
+              <ul class="cv-chips">
+                <% ["JavaScript", "Stimulus", "HTML", "CSS", "Figma"].each do |s| %>
+                  <li class="cv-chip"><%= s %></li>
+                <% end %>
+              </ul>
+            </div>
+
+            <div class="cv-skillgroup">
+              <span class="cv-skillgroup__label"><%= t("cv.skills_groups.ai") %></span>
+              <ul class="cv-chips">
+                <% ["LLMs (Claude API)", "Agents IA", "RAG (pgvector)", "ElevenLabs", "fal.ai", "Stripe"].each do |s| %>
+                  <li class="cv-chip"><%= s %></li>
+                <% end %>
+              </ul>
+            </div>
+
+            <div class="cv-skillgroup">
+              <span class="cv-skillgroup__label"><%= t("cv.skills_groups.tools") %></span>
+              <ul class="cv-chips">
+                <% ["Git", "GitHub", "Heroku", "Railway", "Mapbox", "Agile", "MVC"].each do |s| %>
+                  <li class="cv-chip"><%= s %></li>
+                <% end %>
+              </ul>
+            </div>
+          </section>
+
+          <%# Centres d'intérêt %>
+          <section class="cv-section">
+            <h3 class="cv-section__title"><%= t("cv.interests_title") %></h3>
+            <p class="cv-item__desc"><%= t("cv.interests") %></p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

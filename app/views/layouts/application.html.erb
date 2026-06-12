@@ -80,8 +80,9 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <%# data-controller="cursor" : active le curseur custom sur toute la page %>
-  <body data-controller="cursor">
+  <%# data-controller : "cursor" active le curseur custom, "cv" gère l'ouverture
+      et la fermeture du panneau CV (bouton dans la nav + panneau en bas du body). %>
+  <body data-controller="cursor cv">
     <%# Curseur custom : anneau qui suit la souris + point central %>
     <div class="cursor-ring" data-cursor-target="ring"></div>
     <div class="cursor-dot" data-cursor-target="dot"></div>
@@ -124,16 +125,28 @@
             la langue mémorisée en session et on resterait bloqué dans la langue
             précédente (impossible de rebasculer).
             La langue active est mise en valeur (classe is-active). %>
-        <div class="nav__lang">
-          <a href="<%= url_for(locale: :fr) %>"
-             class="<%= "is-active" if I18n.locale == :fr %>">FR</a>
-          <span class="nav__lang-sep">/</span>
-          <a href="<%= url_for(locale: :en) %>"
-             class="<%= "is-active" if I18n.locale == :en %>">EN</a>
+        <%# Cluster de droite, toujours visible (y compris sur mobile, où les
+            liens d'ancre de gauche sont masqués) : bouton CV + sélecteur de langue. %>
+        <div class="nav__right">
+          <%# Bouton CV : ouvre le panneau CV (contrôleur Stimulus "cv").
+              C'est un <button> (action JS) et non un lien (navigation). %>
+          <button type="button" class="nav__cv" data-action="cv#open"><%= t("nav.cv") %></button>
+
+          <div class="nav__lang">
+            <a href="<%= url_for(locale: :fr) %>"
+               class="<%= "is-active" if I18n.locale == :fr %>">FR</a>
+            <span class="nav__lang-sep">/</span>
+            <a href="<%= url_for(locale: :en) %>"
+               class="<%= "is-active" if I18n.locale == :en %>">EN</a>
+          </div>
         </div>
       </div>
     </nav>
 
     <%= yield %>
+
+    <%# Panneau CV (masqué par défaut) : présent sur toutes les pages,
+        ouvert via le bouton CV de la nav. %>
+    <%= render "pages/cv" %>
   </body>
 </html>
