@@ -145,10 +145,12 @@
 }
 
 // -------------------------------------------------------------
-// 5. GLITCH — au survol du titre du hero, aberration chromatique
-//    (ombres rouge + cyan décalées) avec petites secousses.
+// 5. GLITCH — au survol du titre du hero (et du titre de la page
+//    détail projet), aberration chromatique (ombres rouge + cyan
+//    décalées) avec petites secousses.
 // -------------------------------------------------------------
-.hero__title:hover {
+.hero__title:hover,
+.project-detail__title:hover {
   animation: glitch 0.35s steps(2, end) infinite;
 }
 @keyframes glitch {
@@ -189,5 +191,6 @@
 // On respecte la préférence "moins d'animations"
 @media (prefers-reduced-motion: reduce) {
   .grain, .marquee__track { animation: none; }
-  .hero__title:hover { animation: none; text-shadow: none; }
+  .hero__title:hover,
+  .project-detail__title:hover { animation: none; text-shadow: none; }
 }
