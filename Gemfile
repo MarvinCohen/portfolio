@@ -19,6 +19,11 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# Envoi d'emails via l'API HTTPS de Resend. On passe par HTTP (port 443) et non
+# par SMTP, car Railway bloque les ports SMTP sortants (25/465/587) sur ses
+# plans Trial/Hobby pour empêcher le spam. [https://resend.com/docs]
+gem "resend"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 

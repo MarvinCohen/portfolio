@@ -61,28 +61,16 @@ Rails.application.configure do
 
   # On veut être prévenu si un email n'arrive pas à partir (formulaire de contact).
   config.action_mailer.raise_delivery_errors = true
-  # Méthode d'envoi : SMTP (serveur d'envoi d'emails).
-  config.action_mailer.delivery_method = :smtp
+
+  # Méthode d'envoi : Resend, via son API HTTPS (port 443). On n'utilise plus
+  # SMTP car Railway bloque les ports SMTP sortants (25/465/587) sur ses plans
+  # Trial/Hobby. La clé API est configurée dans config/initializers/resend.rb.
+  config.action_mailer.delivery_method = :resend
 
   # Hôte utilisé pour construire les liens dans les emails et les URL absolues.
   # APP_HOST est défini dans les variables d'environnement Railway
   # (ex : portfolio-marvin.up.railway.app, sans le https://).
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "localhost"), protocol: "https" }
-
-  # Serveur SMTP sortant. On utilise Gmail : les identifiants viennent des
-  # variables d'environnement Railway pour ne JAMAIS les écrire dans le code.
-  # GMAIL_USERNAME : ton adresse Gmail. GMAIL_APP_PASSWORD : un "mot de passe
-  # d'application" Google (généré dans les paramètres de sécurité Google,
-  # pas ton mot de passe habituel).
-  config.action_mailer.smtp_settings = {
-    address:              "smtp.gmail.com",
-    port:                 587,
-    domain:               "gmail.com",
-    user_name:            ENV["GMAIL_USERNAME"],
-    password:             ENV["GMAIL_APP_PASSWORD"],
-    authentication:       :plain,
-    enable_starttls_auto: true
-  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
