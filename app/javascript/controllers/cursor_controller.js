@@ -17,6 +17,16 @@ export default class extends Controller {
     this.ringX = this.mouseX
     this.ringY = this.mouseY
 
+    // Drapeau : tant que la souris n'a pas bougé depuis cette (re)connexion,
+    // on ne connaît pas sa vraie position. Sans ça, après une navigation Turbo
+    // (clic sur un lien de section), le contrôleur se reconnecte avec une
+    // position périmée (centre de l'écran) et l'anneau "se téléporte" au
+    // premier mouvement. On masque donc le curseur jusqu'au 1er mouvement, puis
+    // on le recale d'un coup sur la vraie position (voir onMove).
+    this.hasMoved = false
+    this.dotTarget.style.opacity = "0"
+    this.ringTarget.style.opacity = "0"
+
     // On garde des références aux fonctions pour pouvoir les retirer plus tard
     this.onMove = this.onMove.bind(this)
     this.onOver = this.onOver.bind(this)
@@ -42,6 +52,18 @@ export default class extends Controller {
   onMove(e) {
     this.mouseX = e.clientX
     this.mouseY = e.clientY
+
+    // Premier mouvement depuis la (re)connexion : on cale l'anneau directement
+    // sur la souris (au lieu de le laisser glisser depuis le centre périmé) et
+    // on réaffiche les deux éléments. Plus aucune "téléportation" visible.
+    if (!this.hasMoved) {
+      this.hasMoved = true
+      this.ringX = this.mouseX
+      this.ringY = this.mouseY
+      this.dotTarget.style.opacity = ""
+      this.ringTarget.style.opacity = ""
+    }
+
     // Le point suit instantanément le pointeur
     this.dotTarget.style.transform =
       `translate(${this.mouseX}px, ${this.mouseY}px) translate(-50%, -50%)`
